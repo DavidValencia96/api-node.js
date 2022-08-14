@@ -1,0 +1,6 @@
+https://node-postgres.com/ documentacion 
+
+
+
+para leer variables de entorno
+npm i dotenv

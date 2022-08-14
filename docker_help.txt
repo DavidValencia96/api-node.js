@@ -1,0 +1,32 @@
+Comandos en Docker:
+
+docker-compose up -d postgres → Levantar el contenedor docker.
+
+docker-compose ps → Ver contenedores corriendo.
+
+docker-compose down → Dejar de correr el contenedor docker.
+
+Archivo docker-compose.yml:
+
+Versión (version): La versión del archivo yml en el cual será tratado el proceso.
+Servicios (services): Los servicios que queremos que corra, donde nos podemos conectar.
+Imagen (image): La imagen que queremos correr, en este caso, postgres versión 13.
+Las variables de entorno (environment) son la configuración inicial que el contenedor va a recibir. En este caso, los datos de la BD.
+Puerto (ports): En qué puerto va a correr, en este caso, 5432.
+Volumen (volume): Los contenedores no tienen estado (no tienen persistencia), por lo que todo lo que se haga se puede borrar al
+dejar de correr el contenedor. Para que esto no suceda, se necesita crear un volumen, eso sería decirle “contenedor, cada vez que
+levantes conéctate a este volumen para que ahí vayas guardando toda la información que quiero persistir”.
+Se específica que la persistencia de datos se guardará en la carpeta postgres_data e internamente en el contenedor que
+se está corriendo, los datos son guardados en /var/lib/postgresql/data.
+
+
+Comando	Descripcion
+docker-compose exec postgres bash	Conexion via terminal
+ls -l	Ver todos los archivos
+psql -h localhost -d <POSTGRES_DB> -U <POSTGRES_USER>	Conexion a Postgres
+\d+	Estructura de la base de datos
+\q	Salir base de datos
+exit	Salir del contenedor
+docker-compose up -d pgadmin	Levantar servicio de pgadmin
+docker-ps	Tabla de servicios
+docker-inspect <id>	Detalle del contenedor
