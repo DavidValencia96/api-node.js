@@ -23,3 +23,23 @@ services:
 #6) El ./postgres_data significa que justamtene el archivo que se creara para que se guarde la data esta en la carpeta ./postgres_data, (a su vez debe ser privadad, asi que no la subas a github) Mientras que por otro lado tenemos el /var/lib/postgresql/data, que hace esta ruta? Bueno simplemente hay que entender que esta ruta conecta con la base de datos, es decir, los datos estan guardados en esta ruta en postgresql... POR LO TANTO NOSOTROS PARA CREAR PERSISTENCIA ABSROBEMOS LA DATA DE VAR/LIB/POSTGRESQLETC Y LA LLEVAMOS A POSTGRES_DATA. SABIENDO QUE NO DEBE IR A GITHUB.
 
 #7) Es importante saber que la ruta /var/lib/postgresql/data es de donde obtenemos la imagen. Pero esta ruta puede variar por cuestion de la empresa queu crea la db y demas, entonces la manera de siempre tener esta ruta lista para absorber la imagen es consultando la documentacion de hub.docker.com
+
+  mysql: # Servicio
+    image: mysql:5
+    environment:
+      - MYSQL_DATABASE=my_store #2)
+      - MYSQL_USER=root #3)
+      - MYSQL_ROOT_PASSWORD=admin123 #4)
+      - MYSQL_PORT=3306 #4)
+    ports:
+      - 3306:3306
+    volumes: #5)
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin123 #1)
+      - PMA_HOST=mysql #2) El host debe de ser igual al nombre del servicio
+    ports:
+      - 8080:80
