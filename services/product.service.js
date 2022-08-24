@@ -1,16 +1,16 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
 
-const pool = require('../libs/postgres.pool');
-const sequelize = require('../libs/sequelize');
+// const pool = require('../libs/postgres.pool');
+const { models } = require('../libs/sequelize');
 
 class ProductsService {
 
   constructor(){
     this.products = [];
     this.generate();
-    this.pool = pool;
-    this.pool.on('error', (err) => console.error(err));
+    // this.pool = pool;
+    // this.pool.on('error', (err) => console.error(err));
   }
 
   generate() {
@@ -27,26 +27,34 @@ class ProductsService {
   }
 
   async create(data) {
-    const newProduct = {
-      id: faker.datatype.uuid(),
-      ...data
-    }
-    this.products.push(newProduct);
+    const newProduct = await models.Product.create(data);
     return newProduct;
+
+    // const newProduct = {
+    //   id: faker.datatype.uuid(),
+    //   ...data
+    // }
+    // this.products.push(newProduct);
+    // return newProduct;
   }
 
   async find() {
+    const products = await models.Product.findAll({
+      include: ['category'],
+    });
+    return products;
+
     // consulta con pool "https://node-postgres.com/features/pooling"
     // const query = 'SELECT * FROM tasks';
     // const rta = await this.pool.query(query);
     // return rta.rows;
 
     // consulta por sequelize "https://node-postgres.com/features/pooling"
-    const query = 'SELECT * FROM tasks';
-    const [data] = await sequelize.query(query);
-    return {
-      data
-    };
+    // const query = 'SELECT * FROM tasks';
+    // const [data] = await sequelize.query(query);
+    // return {
+    //   data
+    // };
 
     // return this.products;
   }
