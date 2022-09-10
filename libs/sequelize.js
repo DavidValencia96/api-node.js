@@ -21,8 +21,10 @@ const options = {
 }
 
 if (config.isProd) {
-  options.ssl = {
-    rejectUnauthorized: false
+  options.dialectOptions = { // dialectOptions solo para postgress
+    ssl: {
+      rejectUnauthorized: false
+    }
   }
 }
 
