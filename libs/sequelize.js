@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 const { config } = require('./../config/config');
 const setupModels = require('./../db/models');
 
-
+/*
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
 
@@ -12,17 +12,39 @@ const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${
 
 // Para conexiones con MySql -- recordar habilitar puerto en archivo .ENV
 // const URI = `mysql://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
+*/
 
 
-const sequelize = new Sequelize( URI , {
-  // Para conexiones con Postgres
+const options = {
   dialect: 'postgres',
+  logging: config.isProd ? false: true,
+}
 
-  // Para conexiones con MySql
-  // dialect: 'mysql',
-  logging: true,
+if (config.isProd) {
+  options.ssl = {
+    rejectUnauthorized: false
+  }
+}
 
-});
+// validamos si estamos en producción o desarrollo
+const sequelize = new Sequelize( config.dbUrl, options);
+
+
+
+
+
+//  enviar los parametros de manera manual ya construidos
+// const sequelize = new Sequelize( URI , {
+//   // Para conexiones con Postgres
+//   dialect: 'postgres',
+
+//   // Para conexiones con MySql
+//   // dialect: 'mysql',
+//   logging: true,
+//   ssl: {
+//     rejectUnauthorized: false
+//   }
+// });
 
 setupModels(sequelize); // Recibe la conexión de cada modelo
 

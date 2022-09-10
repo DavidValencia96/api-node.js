@@ -1,0 +1,12 @@
+Agregar a Heroku un proyecto existente: heroku git:remote -a nombre-del-repositorio
+
+Crear un nuevo proyecto de Heroku: heroku create
+
+Crear BD en Heroku: heroku addons:create heroku-postgresql:hobby-dev
+
+Documentación de la BD postgresql en Heroku: heroku addons:docs heroku-postgresql
+
+Información de la base de datos elegida: heroku pg:info
+
+Se debe establecer la variable de entorno DATABASE_URL que da Heroku para poder conectarnos a la BD,
+sin embargo, también podemos usar la misma variable en el entorno de producción y para ello se agrega al archivo .env.
