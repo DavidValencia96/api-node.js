@@ -4,6 +4,8 @@
 const { CUSTOMER_TABLE } = require('./../models/customer.model');
 const { USER_TABLE } = require('./../models/user.model');
 const { DataTypes, Sequelize } = require('sequelize');
+
+
 module.exports = {
   // Inicio de la creación de la migración
   up: async (queryInterface)  => {
