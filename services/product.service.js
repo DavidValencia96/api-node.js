@@ -1,4 +1,5 @@
 const faker = require('faker');
+const { Op } = require('sequelize');
 const boom = require('@hapi/boom');
 
 // const pool = require('../libs/postgres.pool');
@@ -38,10 +39,35 @@ class ProductsService {
     // return newProduct;
   }
 
-  async find() {
-    const products = await models.Product.findAll({
+  async find(query) {
+    const options = {
       include: ['category'],
-    });
+      where: {} // si no hay algun objeto, esto se envia en vacio
+    }
+    const { limit, offset } = query;
+    if (limit && offset) {
+      options.limit = limit; // limite de datos a mostrar
+      options.offset = offset; // offset:: desde donde inicia a mostra (desde el producto 1, 2 o 3 ... )
+    }
+
+    const { price } = query;
+    if (price) {
+      options.where.price = price; // ejecuta el query para consulta productos por un precio en especifico
+    }
+
+    /*
+      doc Sequelize provides several operators.
+      https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+    */
+    const { price_min, price_max } = query;
+    if (price_min && price_max) {
+      options.where.price = {
+        [Op.gte]: price_min, //  gte ::: mayor o igual
+        [Op.lte]: price_max, //  lte ::: menor o igual
+      }
+    }
+
+    const products = await models.Product.findAll(options); // le envio parametro options para paginación
     return products;
 
     // consulta con pool "https://node-postgres.com/features/pooling"
