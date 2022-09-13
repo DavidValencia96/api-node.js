@@ -31,6 +31,14 @@ class UserService {
     });
     return rta;
   }
+  
+
+  async findByEmail(email) {
+    const rta = await models.User.findOne({
+      where: { email } // traer el primer resultado que de la DB cumpla con la consulta
+    });
+    return rta;
+  }
 
   async findOne(id) {
     const user = await models.User.findByPk(id);
