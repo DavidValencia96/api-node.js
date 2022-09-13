@@ -6,9 +6,9 @@ async function verifyPassword(){
 
   const hash = '$2b$10$aF6j2TC0U/nbzqQyBGKcHutIlDxKUMf2p0x3cYlp9HYwZ65SB7DEu'; // Hash generado de pass-hash.js
   // console.log(hash);
-  
+
   const isMatch = await bcrypt.compare(myPassword, hash); // comparamos el hash
-  console.log(isMatch);
+  // console.log(isMatch);
 }
 
 verifyPassword();
