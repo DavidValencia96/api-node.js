@@ -1,4 +1,7 @@
 const boom = require('@hapi/boom');
+const bcrypt = require ('bcrypt');
+
+
 const { models } = require('../libs/sequelize');
 
 class CustomerService {
@@ -21,9 +24,21 @@ class CustomerService {
   }
 
   async create(data) {
-    const newCustomer = await models.Customer.create(data, {
+    const hash = await bcrypt.hash(data.user.password, 10); // Generador de hash
+    const newData = {
+      ...data, // clonamos la información
+      user: {
+        ...data.user, // pasamos la información clonada al subobjeto
+        password: hash
+      }
+    }
+    const newCustomer = await models.Customer.create(newData, {
       include: ['user']
     });
+
+     // retornamos todos los datos sin el password
+     delete newCustomer.user.dataValues.password; // eliminar password que retorna (solo para sequelize - postgres)
+
     return newCustomer;
   }
 
