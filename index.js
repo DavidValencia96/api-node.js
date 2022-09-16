@@ -16,7 +16,7 @@ const options = {
     if (whitelist.includes(origin) || !origin) {
       callback(null, true);
     } else {
-      callback(new Error('no permitido'));
+      callback(new Error('No permitido'));
     }
   }
 }
@@ -28,13 +28,13 @@ app.use(cors(options));
 require('./utils/auth/index');
 
 app.get('/', (req, res) => {
-  res.send('Servicio de API Node.js');
+  res.send('Servicio API Node.js JDVT');
 });
 
 
 // protejemos la ruta, antes de responder debe de hacer la validación de "checkApiKey" y si no cumple con la validación, mostrara error de no autorizado
 app.get('/nueva-ruta', checkApiKey , (req, res) => {
-  res.send('Hola, se autentico de manera correcta');
+  res.send('Autenticación correcta.');
 });
 
 routerApi(app);
@@ -46,5 +46,5 @@ app.use(errorHandler);
 
 
 app.listen(port, () => {
-  console.log('Mi port ' +  port);
+  console.log('Puerto: ' +  port);
 });

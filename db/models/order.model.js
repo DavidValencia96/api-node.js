@@ -32,7 +32,7 @@ const OrderSchema = {
   value: {
     type: DataTypes.VIRTUAL, // esto solo sera virtual y no estara en ninguna tabla de la db
     get(){
-      if (this.items.length > 0){ // tiene que ser el mismo nombre de this.belongsToMany(models.Product, { as: 'item' .... }
+      if (this.items && this.items.length > 0){ // tiene que ser el mismo nombre de this.belongsToMany(models.Product, { as: 'item' .... }
         return this.items.reduce((value, item) => {
           return value + (item.price * item.OrderProduct.amount);
         }, 0);

@@ -39,7 +39,10 @@ router.post('/',
   validationHandler(createOrderSchema, 'body'),
   async (req, res, next) => {
     try {
-      const body = req.body;
+      // const body = req.body;
+      const body = {  // En el body se enviaría el sub del payload como body.
+        userId: req.user.sub
+      };
       const newOrder = await service.create(body);
       res.status(201).json(newOrder);
     } catch (error) {
