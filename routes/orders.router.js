@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const OrderService = require('../services/order.service');
 const validationHandler = require('../middlewares/validator.handler');
@@ -8,16 +9,20 @@ const router = express.Router();
 const service = new OrderService();
 
 
-router.get('/',  async (req, res, next) => {
-  try {
-    res.json(await service.find());
-  } catch (error) {
-    next(error);
+router.get('/',
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
+  async (req, res, next) => {
+    try {
+      res.json(await service.find());
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get('/:id',
- validationHandler(getOrderSchema, 'params'),
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
+  validationHandler(getOrderSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -30,6 +35,7 @@ router.get('/:id',
 );
 
 router.post('/',
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
   validationHandler(createOrderSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -43,6 +49,7 @@ router.post('/',
 );
 
 router.post('/add-item',
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
   validationHandler(addItemSchema, 'body'),
   async (req, res, next) => {
     try {

@@ -1,0 +1,4 @@
+Doc ::: https://jwt.io/libraries?language=Node.js
+
+npm install jsonwebtoken
+

@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const CustomerService = require('../services/customer.service');
 const validationHandler = require('../middlewares/validator.handler');
@@ -7,15 +8,19 @@ const { createCustomerSchema, getCustomerSchema, updateCustomerSchema } = requir
 const router = express.Router();
 const service = new CustomerService();
 
-router.get('/',  async (req, res, next) => {
-  try {
-    res.json(await service.find());
-  } catch (error) {
-    next(error);
+router.get('/',
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
+  async (req, res, next) => {
+    try {
+      res.json(await service.find());
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.post('/',
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
   validationHandler(createCustomerSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -28,6 +33,7 @@ router.post('/',
 );
 
 router.patch('/:id',
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
   validationHandler(getCustomerSchema, 'params'),
   validationHandler(updateCustomerSchema, 'body'),
   async (req, res, next) => {
@@ -42,6 +48,7 @@ router.patch('/:id',
 );
 
 router.delete('/:id',
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
   validationHandler(getCustomerSchema, 'params'),
   async (req, res, next) => {
     try {
