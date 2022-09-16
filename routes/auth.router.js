@@ -1,8 +1,11 @@
+const jwt = require('jsonwebtoken');
 const express = require('express');
 // const passport = require('passport');
 const auth = require('../utils/auth');
 
 const router = express.Router();
+
+const { config } = require('./../config/config');
 
 
 router.post('/login',
@@ -10,7 +13,20 @@ router.post('/login',
   async (req, res, next) => {
     // si todo pasa bien, se deberia de encontrar el request.user
     try {
-      res.json(req.user);
+
+      const user = req.user;
+      // JWT
+      const payload = {
+        sub: user.id, // forma en que se va a identificar al usuario
+        role: user.role  // permisos
+      }
+      const token = jwt.sign(payload, config.jwtSecret);
+
+      // retornarmos datos user + token
+      res.json({
+        user,
+        token
+      });
     } catch (error) {
       next(error);
     }
