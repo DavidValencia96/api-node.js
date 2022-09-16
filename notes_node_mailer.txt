@@ -1,0 +1,12 @@
+npm install nodemailer
+
+crear una cuenta  :::: https://ethereal.email/create
+
+
+Generamos un password en gmail smtp
+
+1.Configuración de cuenta
+1.1 Seguridad
+1.1.1 Iniciar sesión en google
+1.1.1.1 Contraseñas de aplicaciones
+1.1.1.1.1 Seleccionamos "otras aplicaciones" y copias la password que nos genera

@@ -1,9 +1,13 @@
 const express = require('express');
 const passport = require('passport');
 
+
 const UserService = require('./../services/user.service');
 const validatorHandler = require('./../middlewares/validator.handler');
+const { checkAdminRole } = require('./../middlewares/auth.handler');
+
 const { updateUserSchema, createUserSchema, getUserSchema } = require('./../schemas/user.schema');
+
 
 const router = express.Router();
 const service = new UserService();
@@ -35,7 +39,8 @@ router.get('/:id',
 );
 
 router.post('/',
-  // passport.authenticate('jwt', {session: false}), // requiere token para acceder
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
+  checkAdminRole, // solo el rol administrador puede crear usuarios admin  <-------   importan ----------------
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
     try {

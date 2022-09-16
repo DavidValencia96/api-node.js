@@ -28,7 +28,7 @@ passport.use(new LocalStrategy({
 
       // si el password no es correcto, muestra el mensaje de no autorizado
       if(!isMatch){
-        done(boom.unauthorized(), false)
+        done(boom.unauthorized('No estas autorizado.'), false)
       }
 
       delete user.dataValues.password
