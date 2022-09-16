@@ -20,7 +20,7 @@ router.get('/',
 );
 
 router.post('/',
-  passport.authenticate('jwt', {session: false}), // requiere token para acceder
+  // passport.authenticate('jwt', {session: false}), // requiere token para acceder
   validationHandler(createCustomerSchema, 'body'),
   async (req, res, next) => {
     try {

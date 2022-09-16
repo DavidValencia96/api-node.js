@@ -35,7 +35,7 @@ router.get('/:id',
 );
 
 router.post('/',
-  passport.authenticate('jwt', {session: false}), // requiere token para acceder
+  // passport.authenticate('jwt', {session: false}), // requiere token para acceder
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
     try {
