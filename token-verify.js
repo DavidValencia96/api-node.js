@@ -9,5 +9,5 @@ function verifyToken(token, secret) {
 
 const payload = verifyToken (token, secret);
 
-console.log(payload);
+// console.log(payload);
 
