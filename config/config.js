@@ -12,6 +12,7 @@ const config = {
   dbUrl: process.env.DATABASE_URL,
   apiKey: process.env.API_KEY,
   jwtSecret: process.env.JWT_SECRET,
+  jwtSecretRecovery: process.env.JWT_SECRET_RECOVERY_PASSWORD,
   mailerUser:process.env.MAILER_USER,
   mailerPass:process.env.MAILER_PASS,
 };

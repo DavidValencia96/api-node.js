@@ -38,7 +38,7 @@ class CustomerService {
 
      // retornamos todos los datos sin el password
      delete newCustomer.user.dataValues.password; // eliminar password que retorna (solo para sequelize - postgres)
-
+     delete newCustomer.user.dataValues.recoveryToken;
     return newCustomer;
   }
 

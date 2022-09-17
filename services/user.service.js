@@ -17,6 +17,7 @@ class UserService {
 
     // retornamos todos los datos sin el password
     delete newUser.dataValues.password; // eliminar password que retorna (solo para sequelize - postgres)
+    delete newUser.dataValues.recoveryToken;
 
     return newUser;
     // return data;
@@ -31,7 +32,7 @@ class UserService {
     });
     return rta;
   }
-  
+
 
   async findByEmail(email) {
     const rta = await models.User.findOne({
@@ -45,12 +46,10 @@ class UserService {
     if(!user) {
       throw boom.notFound('User not found');
     }
-
     return user;
   }
 
   async update(id, changes) {
-
     const user = await this.findOne(id); // Reutilizamos codigo
     const rta = user.update(changes);
     return rta;
