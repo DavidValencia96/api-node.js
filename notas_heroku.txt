@@ -10,3 +10,35 @@ Información de la base de datos elegida: heroku pg:info
 
 Se debe establecer la variable de entorno DATABASE_URL que da Heroku para poder conectarnos a la BD,
 sin embargo, también podemos usar la misma variable en el entorno de producción y para ello se agrega al archivo .env.
+
+
+
+Para iniciar sesión cmd  heroku :: https://stackoverflow.com/questions/63363085/ip-address-mismatch-on-signing-into-heroku-cli
+:::: comando :::
+
+heroku login -i
+
+::: se selecciona el id del proyecto :::
+
+heroku git:remote -a "nombre proyecto"
+heroku git:remote -a jdnodejdapi
+
+::: instalar nuevas librerias de node en heroku :::
+
+heroku run npm install
+
+::: migraciones ::
+
+heroku run npm migrations:run
+heroku run npm migrations:delete
+
+::: configuración archivo config ::::
+
+heroku config:set API_KEY=123456789.David JWT_SECRET=D8T1LkIMVTA8yYSuNgbadlFJ9yGU7cjD JWT_SECRET_RECOVERY_PASSWORD=v1zBbUTD6wmGDtTbh7H9mrZeA5hEBo_1iIA9xz5emJgaJDVT MAILER_USER="correo a utilizar" MAILER_PASS="password generada desde el correo"
+
+neawvtpgluayjsbc
+
+::: actualizar repo heroku ::
+
+git push heroku "rama-proyecto":master
+git push heroku production:master
