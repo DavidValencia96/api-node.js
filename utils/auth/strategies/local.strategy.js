@@ -1,15 +1,33 @@
-// const { Strategy } = require('passport-local');
-const boom = require('@hapi/boom');
-const bcrypt = require ('bcrypt');
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy;
+// // const { Strategy } = require('passport-local');
+// const boom = require('@hapi/boom');
+// const bcrypt = require ('bcrypt');
+// const passport = require('passport')
+// const LocalStrategy = require('passport-local').Strategy;
+const { Strategy } = require('passport-local');
 
 
-const UserService = require('./../../../services/user.service');
-const service = new UserService();
+// const UserService = require('./../../../services/user.service');
+// const service = new UserService();
+
+const AuthService = require('./../../../services/auth.service');
+const service = new AuthService();
 
 
+const LocalStrategy = new Strategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  async (email, password, done) => {
+    try {
+      const user = await service.getUser(email, password);
+      done(null, user);
+    } catch (error) {
+      done(error, false);
+    }
+  }
+);
 
+/*  remplazamos esta funcion por la anterior
 passport.use(new LocalStrategy({
   // se esta manera recie los nombres en el request
     usernameField: 'email',
@@ -40,7 +58,7 @@ passport.use(new LocalStrategy({
     }
   }
 ));
-
+*/
 
 module.exports = LocalStrategy;
 
