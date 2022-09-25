@@ -9,7 +9,7 @@ const router = express.Router();
 const service = new ProductsService();
 
 router.get('/',
-  // passport.authenticate('jwt', {session: false}), // requiere token para acceder
+  passport.authenticate('jwt', {session: false}), // requiere token para acceder
   validatorHandler(queryProductSchema, 'query'),
   async (req, res, next) => {
     try {
